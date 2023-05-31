@@ -15,7 +15,6 @@ const router = createRouter({
       path: '/service-client',
       name: 'service-client',
       component: ServiceClientView,
-      props: true
     },
     {
       path: '/sabre/:id',

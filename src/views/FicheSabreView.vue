@@ -1,26 +1,32 @@
 <script setup>
+import {useSabresStore} from "@/stores/sabres";
+import router from "@/router";
+
 // Définition des propriétés du composant
 const props = defineProps(['id'])
+
+// Récupération magasin des sabres
+const storeSabre = useSabresStore()
+// Récupère le tableau des sabres du magasin
+const sabre = storeSabre.getSabreById(props.id)
 </script>
 
 <template>
   <main class="page-sabre">
     <div class="sabre">
-      <h1>Sabre n°{{ id }}</h1>
+      <h1>{{ sabre.nom }}</h1>
 
-      <img src="/img/sl-cal.jpg" alt="Sabre laser Cal Kestis">
+      <img :src="'/img/' + sabre.image" :alt="sabre.nom">
+      <img :src="`/img/${sabre.image}`" :alt="sabre.nom">
 
-      <p>
-        Le SL-Cal est un sabre laser de la gamme REPLIKA.
-        Inspiré par le sabre de Cal Kestis, dans le jeu
-        « Fallen Order » (réplique non officielle).
-      </p>
+      <p>{{ sabre.description }}</p>
 
       <ul class="details">
-        <li>Prix: 349 CHF</li>
-        <li>Stock: 10 pièces</li>
-        <li>Longueur: 38cm</li>
-        <li>Poids: 0,600 kg</li>
+        <li>Prix: {{ sabre.prix }} CHF</li>
+        <li v-if="sabre.stock < 11">Stock: {{ sabre.stock }} pièces</li>
+        <li v-else>Stock: Plus de 10 pièces</li>
+        <li>Longueur: {{ sabre.longueur }}cm</li>
+        <li>Poids: {{ sabre.poids }} kg</li>
       </ul>
     </div>
   </main>
